@@ -1,0 +1,29 @@
+server:
+  port: ${SERVER_PORT:8080}
+
+spring:
+  application:
+    name: sca-service
+
+hazelcast:
+  cluster-name: ${HZ_CLUSTER_NAME:sca-cluster}
+  instance-name: ${HZ_INSTANCE_NAME:sca-hazelcast-member}
+  map-name: ${HZ_MAP_NAME:scaContext}
+  port: ${HZ_PORT:5701}
+  ttl-seconds: ${HZ_MAP_TTL_SECONDS:1800}
+  max-idle-seconds: ${HZ_MAP_MAX_IDLE_SECONDS:900}
+  backup-count: ${HZ_MAP_BACKUP_COUNT:1}
+  max-size-per-node: ${HZ_MAP_MAX_SIZE_PER_NODE:10000}
+  kubernetes:
+    enabled: ${HZ_KUBERNETES_ENABLED:false}
+    service-name: ${HZ_KUBERNETES_SERVICE_NAME:sca-service-hazelcast}
+    namespace: ${OPENSHIFT_NAMESPACE:default}
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,metrics
+  endpoint:
+    health:
+      show-details: always

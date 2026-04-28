@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: sca-service-hazelcast
+  labels:
+    app: sca-service
+spec:
+  clusterIP: None
+  publishNotReadyAddresses: true
+  selector:
+    app: sca-service
+  ports:
+    - name: hazelcast
+      port: 5701
+      targetPort: 5701

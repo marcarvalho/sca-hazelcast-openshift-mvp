@@ -1,0 +1,65 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: sca-service
+  labels:
+    app: sca-service
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: sca-service
+  template:
+    metadata:
+      labels:
+        app: sca-service
+    spec:
+      containers:
+        - name: sca-service
+          image: image-registry.openshift-image-registry.svc:5000/sca-dev/sca-service:latest
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 8080
+              name: http
+            - containerPort: 5701
+              name: hazelcast
+          env:
+            - name: OPENSHIFT_NAMESPACE
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.namespace
+            - name: HZ_KUBERNETES_ENABLED
+              value: "true"
+            - name: HZ_KUBERNETES_SERVICE_NAME
+              value: "sca-service-hazelcast"
+            - name: HZ_CLUSTER_NAME
+              value: "sca-cluster"
+            - name: HZ_MAP_NAME
+              value: "scaContext"
+            - name: JAVA_TOOL_OPTIONS
+              value: >-
+                -XX:MaxRAMPercentage=75
+                -Djava.net.preferIPv4Stack=true
+          readinessProbe:
+            httpGet:
+              path: /actuator/health
+              port: 8080
+            initialDelaySeconds: 20
+            periodSeconds: 10
+            timeoutSeconds: 3
+            failureThreshold: 6
+          livenessProbe:
+            httpGet:
+              path: /actuator/health
+              port: 8080
+            initialDelaySeconds: 60
+            periodSeconds: 20
+            timeoutSeconds: 3
+            failureThreshold: 3
+          resources:
+            requests:
+              memory: 512Mi
+              cpu: 250m
+            limits:
+              memory: 1Gi
+              cpu: 1000m

@@ -1,0 +1,9 @@
+br/com/mprj/sca/api/ScaContextController.class
+br/com/mprj/sca/config/HazelcastProperties.class
+br/com/mprj/sca/api/ClusterController.class
+br/com/mprj/sca/context/ScaContextRequest.class
+br/com/mprj/sca/config/HazelcastProperties$Kubernetes.class
+br/com/mprj/sca/context/ScaContextService.class
+br/com/mprj/sca/context/ScaContext.class
+br/com/mprj/sca/ScaHazelcastOpenShiftApplication.class
+br/com/mprj/sca/config/HazelcastConfig.class

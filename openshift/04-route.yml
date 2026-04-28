@@ -1,0 +1,12 @@
+apiVersion: route.openshift.io/v1
+kind: Route
+metadata:
+  name: sca-service
+spec:
+  to:
+    kind: Service
+    name: sca-service
+  port:
+    targetPort: http
+  tls:
+    termination: edge
