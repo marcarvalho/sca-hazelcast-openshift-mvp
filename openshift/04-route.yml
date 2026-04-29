@@ -5,7 +5,7 @@ metadata:
 spec:
   to:
     kind: Service
-    name: sca-service
+    name: sca-api-service
   port:
     targetPort: http
   tls:
