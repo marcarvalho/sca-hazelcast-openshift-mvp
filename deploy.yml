@@ -8,14 +8,14 @@ spec:
   replicas: 3
   selector:
     matchLabels:
-      app: sca-service
+      app: sca-hazelcast-openshift-mvp
   template:
     metadata:
       labels:
-        app: sca-service
+        app: sca-hazelcast-openshift-mvp
     spec:
       containers:
-        - name: sca-service
+        - name:  sca-hazelcast-openshift-mvp
           image: java-springboot-image:latest
           imagePullPolicy: Always          
           ports:
@@ -31,7 +31,7 @@ spec:
             - name: HZ_KUBERNETES_ENABLED
               value: "true"
             - name: HZ_KUBERNETES_SERVICE_NAME
-              value: "sca-service-hazelcast"
+              value: "sca-hazelcast-openshift-mvp"
             - name: HZ_CLUSTER_NAME
               value: "sca-cluster"
             - name: HZ_MAP_NAME
@@ -63,13 +63,12 @@ spec:
             limits:
               memory: 1Gi
               cpu: 1000m
----
 kind: Service
 apiVersion: v1
 metadata:
-  name: sca-service-hazelcast
+  name: sca-hazelcast-openshift-mvp
   labels:
-    app: sca-service  
+    app: sca-hazelcast-openshift-mvp  
 spec:
   clusterIP: None
   ports:
@@ -80,4 +79,4 @@ spec:
       port: 5701
       targetPort: 5701      
   selector:
-    app: sca-service
+    app: sca-hazelcast-openshift-mvp
