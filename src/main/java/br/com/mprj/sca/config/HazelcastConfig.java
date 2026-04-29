@@ -33,6 +33,8 @@ public class HazelcastConfig {
         join.getAutoDetectionConfig().setEnabled(false);
 
         if (properties.getKubernetes().isEnabled()) {
+            String serviceDns = properties.getKubernetes().getServiceName() + "." + properties.getKubernetes().getNamespace() + ".svc.cluster.local";
+
             join.getMulticastConfig().setEnabled(false);
             join.getTcpIpConfig().setEnabled(false);
             join.getAutoDetectionConfig().setEnabled(false);
@@ -40,14 +42,8 @@ public class HazelcastConfig {
                     .setEnabled(true)
                     //.setProperty("service-name", properties.getKubernetes().getServiceName())
                     //.setProperty("namespace", properties.getKubernetes().getNamespace())
-                    .setProperty(
-                            "service-dns",
-                            properties.getKubernetes().getServiceName()
-                            + "."
-                            + properties.getKubernetes().getNamespace()
-                            + ".svc.cluster.local"
-                    )
-                    .setProperty("service-port", String.valueOf((char) properties.getPort()))
+                    .setProperty("service-dns", serviceDns)
+                    .setProperty("service-port", Integer.toString(properties.getPort()))
                     .setProperty("resolve-not-ready-addresses", "true");
         } else {
             join.getTcpIpConfig()
