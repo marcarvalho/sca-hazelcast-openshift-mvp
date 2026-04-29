@@ -1,5 +1,5 @@
-apiVersion: apps/v1
 kind: Deployment
+apiVersion: apps/v1
 metadata:
   name: sca-service
   labels:
@@ -16,8 +16,8 @@ spec:
     spec:
       containers:
         - name: sca-service
-          image: image-registry.openshift-image-registry.svc:5000/sca-dev/sca-service:latest
-          imagePullPolicy: Always
+          image: java-springboot-image:latest
+          imagePullPolicy: Always          
           ports:
             - containerPort: 8081
               name: http
@@ -55,7 +55,7 @@ spec:
             initialDelaySeconds: 60
             periodSeconds: 20
             timeoutSeconds: 3
-            failureThreshold: 3
+            failureThreshold: 3              
           resources:
             requests:
               memory: 512Mi
@@ -63,3 +63,21 @@ spec:
             limits:
               memory: 1Gi
               cpu: 1000m
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name: sca-service-hazelcast
+  labels:
+    app: sca-service  
+spec:
+  clusterIP: None
+  ports:
+    - name: http-8081
+      port: 8081
+      targetPort: 8081
+    - name: hazelcast
+      port: 5701
+      targetPort: 5701      
+  selector:
+    app: sca-service
