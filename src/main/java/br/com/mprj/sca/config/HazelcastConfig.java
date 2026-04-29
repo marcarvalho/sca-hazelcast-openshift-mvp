@@ -33,6 +33,9 @@ public class HazelcastConfig {
         join.getAutoDetectionConfig().setEnabled(false);
 
         if (properties.getKubernetes().isEnabled()) {
+            join.getMulticastConfig().setEnabled(false);
+            join.getTcpIpConfig().setEnabled(false);
+            join.getAutoDetectionConfig().setEnabled(false);
             join.getKubernetesConfig()
                     .setEnabled(true)
                     .setProperty("service-name", properties.getKubernetes().getServiceName())

@@ -521,3 +521,11 @@ Este MVP entrega:
 - GitHub Actions para build.
 
 Com isso, múltiplos pods do serviço conseguem compartilhar o mesmo contexto SSO em memória distribuída.
+
+
+
+### Testes
+curl -X POST http://localhost:8081/api/sca-context/ABC123 -H 'Content-Type: application/json'  -d '{ "username": "marcao","accessTokenReference": "access-ref-001","refreshTokenReference": "refresh-ref-001", "attributes": { "perfil": "ADMIN"}}'
+curl -X POST https://sca-hazelcast-openshift-mvp-mprj-marco-carvalho-dev.apps.rm1.0a51.p1.openshiftapps.com/api/sca-context/ABC123 -H 'Content-Type: application/json'  -d '{ "username": "marcao","accessTokenReference": "access-ref-001","refreshTokenReference": "refresh-ref-001", "attributes": { "perfil": "ADMIN"}}'
+
+curl https://sca-hazelcast-openshift-mvp-mprj-marco-carvalho-dev.apps.rm1.0a51.p1.openshiftapps.com/api/sca-context/ABC123
