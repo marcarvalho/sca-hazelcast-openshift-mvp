@@ -38,8 +38,17 @@ public class HazelcastConfig {
             join.getAutoDetectionConfig().setEnabled(false);
             join.getKubernetesConfig()
                     .setEnabled(true)
-                    .setProperty("service-name", properties.getKubernetes().getServiceName())
-                    .setProperty("namespace", properties.getKubernetes().getNamespace());
+                    //.setProperty("service-name", properties.getKubernetes().getServiceName())
+                    //.setProperty("namespace", properties.getKubernetes().getNamespace())
+                    .setProperty(
+                            "service-dns",
+                            properties.getKubernetes().getServiceName()
+                            + "."
+                            + properties.getKubernetes().getNamespace()
+                            + ".svc.cluster.local"
+                    )
+                    .setProperty("service-port", String.valueOf((char) properties.getPort()))
+                    .setProperty("resolve-not-ready-addresses", "true");
         } else {
             join.getTcpIpConfig()
                     .setEnabled(true)
