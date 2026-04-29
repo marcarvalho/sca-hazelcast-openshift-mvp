@@ -35,7 +35,7 @@ public class HazelcastProperties {
 
     public static class Kubernetes {
         private boolean enabled;
-        private String serviceName = "sca-service-hazelcast";
+        private String serviceName = "sca-hazelcast-headless";
         private String namespace = "default";
 
         public boolean isEnabled() { return enabled; }

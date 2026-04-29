@@ -16,7 +16,7 @@ hazelcast:
   max-size-per-node: ${HZ_MAP_MAX_SIZE_PER_NODE:10000}
   kubernetes:
     enabled: ${HZ_KUBERNETES_ENABLED:false}
-    service-name: ${HZ_KUBERNETES_SERVICE_NAME:sca-service-hazelcast}
+    service-name: ${HZ_KUBERNETES_SERVICE_NAME:sca-hazelcast-headless}
     namespace: ${OPENSHIFT_NAMESPACE:default}
 
 management:

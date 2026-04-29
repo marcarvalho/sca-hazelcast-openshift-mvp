@@ -1,9 +1,9 @@
 kind: Deployment
 apiVersion: apps/v1
 metadata:
-  name: sca-service
+  name: sca-hazelcast-openshift-mvp
   labels:
-    app: sca-service
+    app: sca-hazelcast-openshift-mvp
 spec:
   replicas: 3
   selector:
