@@ -1,17 +1,15 @@
-kind: Service
 apiVersion: v1
+kind: Service
 metadata:
   name: sca-api-service
-  namespace: mprj-marco-carvalho-dev
   labels:
     app: sca-hazelcast-openshift-mvp
 spec:
+  type: ClusterIP
+  selector:
+    app: sca-hazelcast-openshift-mvp
   ports:
-    - name: http-8081
+    - name: http
       protocol: TCP
       port: 8081
       targetPort: 8081
-  selector:
-    app: sca-hazelcast-openshift-mvp
-  type: ClusterIP
-      

@@ -1,18 +1,16 @@
-kind: Service
 apiVersion: v1
+kind: Service
 metadata:
   name: sca-hazelcast-headless
-  namespace: mprj-marco-carvalho-dev
   labels:
     app: sca-hazelcast-openshift-mvp
 spec:
   clusterIP: None
-  publishNotReadyAddresses: true  
+  publishNotReadyAddresses: true
+  selector:
+    app: sca-hazelcast-openshift-mvp
   ports:
     - name: hazelcast
       protocol: TCP
       port: 5701
       targetPort: 5701
-  selector:
-    app: sca-hazelcast-openshift-mvp
-      

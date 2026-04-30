@@ -1,22 +1,22 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: sca-service
+  name: sca-hazelcast-openshift-mvp
   labels:
-    app: sca-service
+    app: sca-hazelcast-openshift-mvp
 spec:
   replicas: 3
   selector:
     matchLabels:
-      app: sca-service
+      app: sca-hazelcast-openshift-mvp
   template:
     metadata:
       labels:
-        app: sca-service
+        app: sca-hazelcast-openshift-mvp
     spec:
       containers:
-        - name: sca-service
-          image: image-registry.openshift-image-registry.svc:5000/sca-dev/sca-service:latest
+        - name: sca-hazelcast-openshift-mvp
+          image: image-registry.openshift-image-registry.svc:5000/SEU_NAMESPACE/sca-hazelcast-openshift-mvp:latest
           imagePullPolicy: Always
           ports:
             - containerPort: 8081
@@ -24,6 +24,8 @@ spec:
             - containerPort: 5701
               name: hazelcast
           env:
+            - name: SERVER_PORT
+              value: "8081"
             - name: OPENSHIFT_NAMESPACE
               valueFrom:
                 fieldRef:
@@ -31,19 +33,17 @@ spec:
             - name: HZ_KUBERNETES_ENABLED
               value: "true"
             - name: HZ_KUBERNETES_SERVICE_NAME
-              value: "sca-service-hazelcast"
+              value: sca-hazelcast-headless
             - name: HZ_CLUSTER_NAME
-              value: "sca-cluster"
+              value: sca-cluster
             - name: HZ_MAP_NAME
-              value: "scaContext"
+              value: scaContext
             - name: JAVA_TOOL_OPTIONS
-              value: >-
-                -XX:MaxRAMPercentage=75
-                -Djava.net.preferIPv4Stack=true
+              value: "-XX:MaxRAMPercentage=75 -Djava.net.preferIPv4Stack=true"
           readinessProbe:
             httpGet:
               path: /actuator/health
-              port: 8080
+              port: 8081
             initialDelaySeconds: 20
             periodSeconds: 10
             timeoutSeconds: 3
@@ -51,7 +51,7 @@ spec:
           livenessProbe:
             httpGet:
               path: /actuator/health
-              port: 8080
+              port: 8081
             initialDelaySeconds: 60
             periodSeconds: 20
             timeoutSeconds: 3

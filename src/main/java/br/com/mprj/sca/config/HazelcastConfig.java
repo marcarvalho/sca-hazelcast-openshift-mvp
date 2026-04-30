@@ -40,8 +40,6 @@ public class HazelcastConfig {
             join.getAutoDetectionConfig().setEnabled(false);
             join.getKubernetesConfig()
                     .setEnabled(true)
-                    //.setProperty("service-name", properties.getKubernetes().getServiceName())
-                    //.setProperty("namespace", properties.getKubernetes().getNamespace())
                     .setProperty("service-dns", serviceDns)
                     .setProperty("service-port", Integer.toString(properties.getPort()))
                     .setProperty("resolve-not-ready-addresses", "true");
